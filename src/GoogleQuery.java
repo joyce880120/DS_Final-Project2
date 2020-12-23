@@ -12,8 +12,6 @@ import java.net.URLConnection;
 
 import java.util.HashMap;
 
-
-
 import org.jsoup.Jsoup;
 
 import org.jsoup.nodes.Document;
@@ -22,9 +20,7 @@ import org.jsoup.nodes.Element;
 
 import org.jsoup.select.Elements;
 
-
-
-public class GoogleQuery 
+public class GoogleQuery
 
 {
 
@@ -37,16 +33,18 @@ public class GoogleQuery
 	public GoogleQuery(String searchKeyword)
 
 	{
-
+		/*
+		 * try{ this.searchKeyword = new
+		 * String(searchKeyword.getBytes("UTF-8"),"UTF-8"); }catch (Exception ignored) {
+		 * // Ignore it }//轉換中文編碼為utf-8
+		 */
 		this.searchKeyword = searchKeyword;
 
-		this.url = "http://www.google.com/search?q="+searchKeyword+"&oe=utf8&num=10";
+		this.url = "http://www.google.com/search?q=" + searchKeyword + "&oe=utf8&num=20";
 
 	}
 
-	
-
-	private String fetchContent() throws IOException
+	public String fetchContent() throws IOException
 
 	{
 		String retVal = "";
@@ -59,68 +57,53 @@ public class GoogleQuery
 
 		InputStream in = conn.getInputStream();
 
-		InputStreamReader inReader = new InputStreamReader(in,"utf-8");
+		InputStreamReader inReader = new InputStreamReader(in, "utf-8");
 
 		BufferedReader bufReader = new BufferedReader(inReader);
 		String line = null;
 
-		while((line=bufReader.readLine())!=null)
-		{
+		while ((line = bufReader.readLine()) != null) {
 			retVal += line;
 
 		}
 		return retVal;
 	}
+
 	public HashMap<String, String> query() throws IOException
 
 	{
 
-		if(content==null)
+		if (content == null)
 
 		{
 
-			content= fetchContent();
+			content = fetchContent();
 
 		}
 
 		HashMap<String, String> retVal = new HashMap<String, String>();
-		
+
 		Document doc = Jsoup.parse(content);
-		System.out.println(doc.text());
 		Elements lis = doc.select("div");
-		// System.out.println(lis);
 		lis = lis.select(".kCrYT");
-		// System.out.println(lis.size());
-		
-		
-		for(Element li : lis)
-		{
-			try 
+
+		for (Element li : lis) {
+			try
 
 			{
 				String citeUrl = li.select("a").get(0).attr("href");
 				String title = li.select("a").get(0).select(".vvjwJb").text();
-				System.out.println(title + ","+citeUrl);
 				retVal.put(title, citeUrl);
 
 			} catch (IndexOutOfBoundsException e) {
 
-//				e.printStackTrace();
+				// e.printStackTrace();
 
 			}
 
-			
-
 		}
-
-		
-
 		return retVal;
 
 	}
-
-	
-
-	
 
 }

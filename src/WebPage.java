@@ -1,7 +1,6 @@
 import java.io.IOException;
 import java.util.ArrayList;
 
-//幫每個node計算自己的網頁分數
 public class WebPage {
 	public String url;
 	public String name;
@@ -23,18 +22,16 @@ public class WebPage {
 		keywords.add(7, new Keyword("主演", 0, -3));
 		keywords.add(8, new Keyword("視頻", 0, -5));
 		keywords.add(9, new Keyword("電影", 0, -6));
+
 	}
 
 	public void setScore(ArrayList<Keyword> keywords) throws IOException {
 		score = 0;
 		for (Keyword k : keywords) {
-			int temp=0;
-			temp=counter.countKeyword(k.name);
+			int temp = 0;
+			temp = counter.countKeyword(k.name);
 			k.setCount(temp);
 			score += k.getCount() * k.weight;
-			//System.out.println(counter.getContent());
-			
-			System.out.println(k);
 		}
 	}
 

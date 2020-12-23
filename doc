@@ -1,0 +1,66 @@
+-------------
+|  WebTree  |
+-------------
+WebNode root;
+GoogleQuery gq;
+WebpageQuery wq;
+******************	
+constructor					WebTree(WebPage rootPage, String keyword)建立一個新的WebTree物件，輸入參數為想要搜尋的關鍵字
+								(這個constructor為建立tree之中的第一個node，webpage可以隨便打就好，keyword可以打關鍵字)
+void 						setPostOrderScore()對整顆tree之中的node計算分數
+void 						eularPrintTree()印出整顆tree的樣子
+void 						search(String search)輸入關鍵字，將所得之標題、url建立成WebNode並加進tree之中
+String 						procurl(String url)處理所搜尋到的網址，擷取所需之部分
+void 						searchpage(WebNode wn)對WebNode的網址進行搜尋，將所得之標題、url建立成WebNode並加進tree之中
+void 						buildTree(String search)輸入關鍵字，並建立整顆tree
+ArrayList<WebNode> 			sortPage()對tree之中root的children進行排序，並由大到小排序。所得之結果為我們所需之排序後結果。
+
+-------------
+|GoogleQuery|
+-------------
+String searchKeyword;
+String url;
+String content;
+******************	
+constructor					GoogleQuery(String searchKeyword)建立一個新的GoogleQuery物件，輸入參數為想要搜尋的關鍵字
+String						fetchContent()回傳google搜尋之內容
+HashMap<String, String>		query()回傳google搜尋之結果，內容為"標題=url"
+
+--------------
+|WebpageQuery|
+--------------
+String content;
+******************	
+constructor					WebpageQuery()建立一個新的WebpageQuery物件
+HttpURLConnection			getConn(String url)回傳HttpURLConnection，輸入參數為想要搜尋的網址，
+								並設定conn的時間為10(可自行調整)
+String 						fetchContent(String url)回傳網址搜尋之內容
+HashMap<String, String> 	pagequery(String url)回傳網址搜尋之結果，內容為"標題=url"
+
+-------------
+|  WebPage  |
+-------------
+String url;
+String name;
+WordCounter counter;
+double score;
+ArrayList<Keyword> keywords = new ArrayList();
+******************	
+constructor					WebPage(String url, String name)建立一個新的WebPage物件，輸入參數為網址以及名稱
+void						setScore(ArrayList<Keyword> keywords)依據輸入的keyword對WebPage算分數
+void						count()依據WebPage算分數(依據WebPage本身的關鍵字)
+
+-------------
+|  WebNode  |
+-------------
+WebNode parent;
+ArrayList<WebNode> children;
+WebPage webPage; 
+double nodeScore;
+******************	
+constructor					WebNode(WebPage webPage)建立一個新的WebNode物件，輸入參數為webPage
+void						setNodeScore(ArrayList<Keyword> keywords)計算此WebNode的分數
+void						setNodeScore()計算此WebNode的分數
+void						addChild(WebNode child)增加此WebNode之children
+
+
