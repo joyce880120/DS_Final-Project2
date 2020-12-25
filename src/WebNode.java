@@ -18,9 +18,9 @@ public class WebNode {
 
 		// 1. compute webPage score
 		// webPage.setScore(keywords);
-		webPage.count();
+		getWebPage().count();
 		// 2. set webPage score to nodeScore
-		nodeScore = webPage.score;
+		nodeScore = getWebPage().score;
 		// 3. nodeScore += all children¡¦s nodeScore
 		for (WebNode child : children) {
 			nodeScore += child.nodeScore;
@@ -32,9 +32,9 @@ public class WebNode {
 
 		// 1. compute webPage score
 		// webPage.setScore(keywords);
-		webPage.count();// changed
+		getWebPage().count();// changed
 		// 2. set webPage score to nodeScore
-		nodeScore = webPage.score;
+		nodeScore = getWebPage().score;
 		// 3. nodeScore += all children¡¦s nodeScore
 		for (WebNode child : children) {
 			nodeScore += child.nodeScore;
@@ -64,5 +64,9 @@ public class WebNode {
 			currNode = currNode.parent;
 		}
 		return retVal;
+	}
+
+	public WebPage getWebPage() {
+		return webPage;
 	}
 }

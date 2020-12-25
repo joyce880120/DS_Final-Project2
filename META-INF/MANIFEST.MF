@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: DS_Connect
+Bundle-SymbolicName: DS_Connect
+Bundle-Version: 1.0.0.qualifier
+Automatic-Module-Name: DS.Connect
+Bundle-RequiredExecutionEnvironment: JavaSE-15

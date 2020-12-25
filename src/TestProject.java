@@ -1,6 +1,7 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map.Entry;
 
@@ -11,17 +12,30 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
+
 /**
  * Servlet implementation class TestProject
  */
 @WebServlet("/TestProject")
 public class TestProject extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	//add a web tree for ranking
+	public WebTree keywordTree;
+	public WebNode keywordNode;
+	public WebPage keywordPage;
     /**
      * @see HttpServlet#HttpServlet()
      */
     public TestProject() {
         super();
+        //one for url one for keyword
+        this.keywordPage = new WebPage(null, null);
+        this.keywordNode = new WebNode(keywordPage);
+        this.keywordTree = new WebTree(null);
         // TODO Auto-generated constructor stub
     }
 
@@ -39,17 +53,37 @@ public class TestProject extends HttpServlet {
 			request.getRequestDispatcher("Search.jsp").forward(request, response);
 			return;
 		}
+		//get google query and put it in hashmap, which can get title and url
 		GoogleQuery google = new GoogleQuery(request.getParameter("keyword"));
-		HashMap<String, String> query = google.query();
+		
+//		HashMap<String, String> query = google.query();
+		
+		WebPage testgq = new WebPage(google.getUrl(), request.getParameter("keyword"));
+		WebTree keywordTree = new WebTree(testgq, request.getParameter("keyword"));
+
+		keywordTree.buildTree(request.getParameter("keyword"));
+		keywordTree.setPostOrderScore();
+		ArrayList<WebNode> sorts = keywordTree.sortPage();
+		
+		HashMap<String, String> query = new HashMap<String, String>();
+
+		for (WebNode sort : sorts) 
+		{
+			String citeUrl = sort.getWebPage().getUrl();
+			String title = sort.getWebPage().getName();
+			query.put(title, citeUrl);
+		}
 		
 		String[][] s = new String[query.size()][2];
+
+		//s attribute is set to get for googleitem jsp
 		request.setAttribute("query", s);
 		int num = 0;
 		for(Entry<String, String> entry : query.entrySet()) {
 		    String key = entry.getKey();
-		    String value = entry.getValue();
+		    String value = entry.getValue();			
 		    s[num][0] = key;
-		    s[num][1] = value;
+		    s[num][1] = value;	    
 		    num++;
 		}
 		request.getRequestDispatcher("googleitem.jsp")

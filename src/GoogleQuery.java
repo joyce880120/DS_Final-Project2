@@ -49,7 +49,7 @@ public class GoogleQuery
 	{
 		String retVal = "";
 
-		URL u = new URL(url);
+		URL u = new URL(getUrl());
 
 		URLConnection conn = u.openConnection();
 
@@ -104,6 +104,10 @@ public class GoogleQuery
 		}
 		return retVal;
 
+	}
+
+	public String getUrl() {
+		return url;
 	}
 
 }

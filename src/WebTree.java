@@ -58,7 +58,7 @@ public class WebTree {
 		// print "("
 		System.out.print("(");
 		// print "name","score"
-		System.out.print(startNode.webPage.name + "," + startNode.nodeScore);
+		System.out.print(startNode.getWebPage().name + "," + startNode.nodeScore);
 		// System.out.print(startNode.webPage.name + "," + startNode.nodeScore + "," +
 		// startNode.webPage.url);
 		// System.out.print(startNode.webPage.name + "," + startNode.webPage.url);//test
@@ -87,6 +87,7 @@ public class WebTree {
 	}
 
 	public void search(String search) throws IOException {
+
 		HashMap<String, String> page = gq.query();
 		Set<String> keys = page.keySet();
 		for (String key : keys) {
@@ -119,11 +120,11 @@ public class WebTree {
 
 			for (WebNode n : wn.children) {
 
-				HashMap<String, String> page1 = wq.pagequery(n.webPage.url);
+				HashMap<String, String> page1 = wq.pagequery(n.getWebPage().url);
 
 				Set<String> keys1 = page1.keySet();
 				for (String key : keys1) {
-					String url = procurl(n.webPage.url);
+					String url = procurl(n.getWebPage().url);
 					url = url + page1.get(key);
 					WebNode subpage;
 					subpage = new WebNode(new WebPage(url, key));
@@ -139,6 +140,7 @@ public class WebTree {
 
 	public void buildTree(String search) throws IOException {
 		search(search);
+		System.out.println("a");
 		searchpage(this.root);
 
 	}
