@@ -9,6 +9,6 @@ public class WebNodeComparator implements Comparator<WebNode> {
 		int one = (int) o1.nodeScore;
 		int two = (int) o2.nodeScore;
 		return two-one;
-
+//
 	}
 }

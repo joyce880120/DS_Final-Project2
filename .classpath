@@ -12,6 +12,6 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.pde.core.requiredPlugins"/>
-	<classpathentry kind="lib" path="C:/Users/user/git/DS_Final-Project2/jsoup-1.13.1.jar"/>
+	<classpathentry kind="lib" path="C:/Users/User/Downloads/jsoup-1.13.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

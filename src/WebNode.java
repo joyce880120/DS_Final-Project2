@@ -55,7 +55,7 @@ public class WebNode {
 
 		return this.equals(siblings.get(siblings.size() - 1));
 	}
-
+//
 	public int getDepth() {
 		int retVal = 1;
 		WebNode currNode = this;

@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import java.io.InputStreamReader;
-
+import java.net.HttpURLConnection;
 import java.net.URL;
 
 import java.net.URLConnection;
@@ -30,6 +30,8 @@ public class GoogleQuery
 
 	public String content;
 
+	public URLEncode en = new URLEncode();
+
 	public GoogleQuery(String searchKeyword)
 
 	{
@@ -39,9 +41,20 @@ public class GoogleQuery
 		 * // Ignore it }//轉換中文編碼為utf-8
 		 */
 		this.searchKeyword = searchKeyword;
+		System.out.println(this.searchKeyword);
+		String enKeyword = en.urlEncoder(searchKeyword);
+		this.url = "http://www.google.com/search?q=" + enKeyword + "&oe=utf8&num=20";
+//		this.url = "http://www.google.com/search?q=" + searchKeyword + "&oe=utf8&num=20";
 
-		this.url = "http://www.google.com/search?q=" + searchKeyword + "&oe=utf8&num=20";
+	}
 
+	public HttpURLConnection getConn(String url) throws IOException {
+		URL u = new URL(url);
+		HttpURLConnection conn = (HttpURLConnection) u.openConnection();
+//		conn.setConnectTimeout(100);
+//		conn.setReadTimeout(100);
+//		conn.connect();
+		return conn;
 	}
 
 	public String fetchContent() throws IOException
@@ -50,6 +63,8 @@ public class GoogleQuery
 		String retVal = "";
 
 		URL u = new URL(getUrl());
+
+//		HttpURLConnection conn = getConn(this.url);
 
 		URLConnection conn = u.openConnection();
 
@@ -107,7 +122,7 @@ public class GoogleQuery
 	}
 
 	public String getUrl() {
-		return url;
+		return this.url;
 	}
 
 }

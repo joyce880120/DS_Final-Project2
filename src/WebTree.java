@@ -33,7 +33,7 @@ public class WebTree {
 			setPostOrderScore(child);
 			child.setNodeScore();
 		}
-		// 5.setNode score of startNode
+		// 5.setNode score of startNode//
 		startNode.setNodeScore();
 	}
 
@@ -102,15 +102,20 @@ public class WebTree {
 	}
 
 	public String procurl(String url) {
-		if (url.contains(".org")) {
-			url = url.substring(url.indexOf("url?q=") + 6);
-			url = url.substring(0, url.indexOf(".org") + 4);
-		} else if (url.contains(".cc")) {
-			url = url.substring(url.indexOf("url?q=") + 6);
-			url = url.substring(0, url.indexOf(".cc") + 3);
-		} else {
-			url = url.substring(url.indexOf("url?q=") + 6);
-			url = url.substring(0, url.indexOf(".com") + 4);
+		if (url.contains(".tw")) {
+			if (url.contains(".org")) {
+				url = url.substring(url.indexOf("url?q=") + 6);
+				// url = url.substring(0, url.indexOf(".org") + 4);
+				url = url.substring(0, url.indexOf(".org") + 7);
+			} else if (url.contains(".cc")) {
+				url = url.substring(url.indexOf("url?q=") + 6);
+				// url = url.substring(0, url.indexOf(".cc") + 3);
+				url = url.substring(0, url.indexOf(".cc") + 6);
+			} else {
+				url = url.substring(url.indexOf("url?q=") + 6);
+				// url = url.substring(0, url.indexOf(".com") + 4);
+				url = url.substring(0, url.indexOf(".com") + 7);
+			}
 		}
 		return url;
 	}
@@ -140,7 +145,6 @@ public class WebTree {
 
 	public void buildTree(String search) throws IOException {
 		search(search);
-		System.out.println("a");
 		searchpage(this.root);
 
 	}

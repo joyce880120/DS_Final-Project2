@@ -59,7 +59,7 @@ public class WebpageQuery {
 
 	}
 
-	// new
+	// new//
 	public HashMap<String, String> pagequery(String url) throws IOException
 
 	{

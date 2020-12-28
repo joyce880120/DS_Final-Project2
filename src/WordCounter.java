@@ -37,7 +37,9 @@ public class WordCounter {
 	public int countKeyword(String keyword) throws IOException {
 		int retVal = 0;
 		try {
-			content = fetchContent(this.urlStr);
+			if(content == null) {
+				content = fetchContent(this.urlStr);
+			}
 			if (content.contains("302 Moved")) {
 				String new_url = Jsoup.parse(content).select("a").get(0).attr("href");
 				if (new_url.contains("pdf")) {

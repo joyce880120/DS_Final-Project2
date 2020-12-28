@@ -17,84 +17,112 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
+import java.net.URL;
+
+import java.net.URI;
+
 /**
  * Servlet implementation class TestProject
  */
 @WebServlet("/TestProject")
 public class TestProject extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-	//add a web tree for ranking
+	// add a web tree for ranking
 	public WebTree keywordTree;
 	public WebNode keywordNode;
 	public WebPage keywordPage;
-    /**
-     * @see HttpServlet#HttpServlet()
-     */
-    public TestProject() {
-        super();
-        //one for url one for keyword
-        this.keywordPage = new WebPage(null, null);
-        this.keywordNode = new WebNode(keywordPage);
-        this.keywordTree = new WebTree(null);
-        // TODO Auto-generated constructor stub
-    }
 
 	/**
-	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#HttpServlet()
 	 */
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	public TestProject() {
+		super();
+		// one for url one for keyword
+		this.keywordPage = new WebPage(null, null);
+		this.keywordNode = new WebNode(keywordPage);
+		this.keywordTree = new WebTree(null);
+		// TODO Auto-generated constructor stub
+	}
+
+	/**
+	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse
+	 *      response)
+	 */
+	protected void doGet(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.setCharacterEncoding("UTF-8");
 		request.setCharacterEncoding("UTF-8");
 		response.setContentType("text/html");
-		if(request.getParameter("keyword")== null) {
+		if (request.getParameter("keyword") == null) {
 			String requestUri = request.getRequestURI();
 			request.setAttribute("requestUri", requestUri);
 			request.getRequestDispatcher("Search.jsp").forward(request, response);
 			return;
 		}
-		//get google query and put it in hashmap, which can get title and url
-		GoogleQuery google = new GoogleQuery(request.getParameter("keyword"));
-		
+		// get google query and put it in hashmap, which can get title and url
+		String k = request.getParameter("keyword") + "小說";// 偷偷在搜尋結果關鍵字上加上"小說"
+		GoogleQuery google = new GoogleQuery(k);
+		WebPage testgq = new WebPage(google.getUrl(), k);
+		WebTree keywordTree = new WebTree(testgq, k);
+		keywordTree.buildTree(k);
+//		GoogleQuery google = new GoogleQuery(request.getParameter("keyword"));
+//
 //		HashMap<String, String> query = google.query();
-		
-		WebPage testgq = new WebPage(google.getUrl(), request.getParameter("keyword"));
-		WebTree keywordTree = new WebTree(testgq, request.getParameter("keyword"));
+//
+//		WebPage testgq = new WebPage(google.getUrl(), request.getParameter("keyword"));
+//		WebTree keywordTree = new WebTree(testgq, request.getParameter("keyword"));
 
-		keywordTree.buildTree(request.getParameter("keyword"));
+//		keywordTree.buildTree(request.getParameter("keyword"));
 		keywordTree.setPostOrderScore();
 		ArrayList<WebNode> sorts = keywordTree.sortPage();
-		
-		HashMap<String, String> query = new HashMap<String, String>();
 
-		for (WebNode sort : sorts) 
-		{
+//		HashMap<String, String> query = new HashMap<String, String>();
+		String[][] s = new String[sorts.size()][2];
+		int num = 0;//
+		for (WebNode sort : sorts) {
 			String citeUrl = sort.getWebPage().getUrl();
-			String title = sort.getWebPage().getName();
-			query.put(title, citeUrl);
-		}
-		
-		String[][] s = new String[query.size()][2];
+			int index = citeUrl.indexOf("?q=");
+			int index2 = citeUrl.lastIndexOf("&sa=");
+			citeUrl = citeUrl.substring(index + 3,index2);// 網址去頭去尾
+//			int index2 = citeUrl.indexOf("&sa=");
+			
+			//citeUrl = citeUrl.substring(0, index2);// 網址
 
-		//s attribute is set to get for googleitem jsp
-		request.setAttribute("query", s);
-		int num = 0;
-		for(Entry<String, String> entry : query.entrySet()) {
-		    String key = entry.getKey();
-		    String value = entry.getValue();			
-		    s[num][0] = key;
-		    s[num][1] = value;	    
-		    num++;
+			String title = sort.getWebPage().getName();
+
+			System.out.print(sort.nodeScore);// test
+			System.out.print(title);// test
+			System.out.println(citeUrl);// test
+			s[num][0] = title;//
+			s[num][1] = citeUrl;//
+			num++;
+//			query.put(title, citeUrl);
 		}
-		request.getRequestDispatcher("googleitem.jsp")
-		 .forward(request, response); 
-		
+
+//		String[][] s = new String[query.size()][2];
+//		int num = 0;
+//		System.out.println("**********************");// test
+//		for (Entry<String, String> entry : query.entrySet()) {
+//			String key = entry.getKey();
+//			String value = entry.getValue();
+//			s[num][0] = key;
+//			s[num][1] = value;
+//			num++;
+//			System.out.println(key+": "+value);//test
+//		}
+		// s attribute is set to get for googleitem jsp
+		request.setAttribute("query", s);
+		request.getRequestDispatcher("googleitem.jsp").forward(request, response);
+
 	}
 
 	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
+	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
+	 *      response)
 	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		doGet(request, response);
 	}
