@@ -61,7 +61,7 @@ public class TestProject extends HttpServlet {
 			return;
 		}
 		// get google query and put it in hashmap, which can get title and url
-		String k = request.getParameter("keyword") + "小說";// 偷偷在搜尋結果關鍵字上加上"小說"
+		String k = request.getParameter("keyword") + "+小說";// 偷偷在搜尋結果關鍵字上加上"小說"
 		GoogleQuery google = new GoogleQuery(k);
 		WebPage testgq = new WebPage(google.getUrl(), k);
 		WebTree keywordTree = new WebTree(testgq, k);
