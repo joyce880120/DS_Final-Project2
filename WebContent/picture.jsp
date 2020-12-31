@@ -1,10 +1,10 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=BIG5"
+	pageEncoding="BIG5"%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title>NovelSearch</title>
+<title>Team Member</title>
 <style>
 <
 style type ="text /css ">#sidebar {
@@ -90,7 +90,7 @@ body {
 	font-size: 15px;
 	padding: 10px;
 	position: relative;
-	top: -55px;
+	top: -60px;
 	left: 180px;
 	height: 40px;
 	border-radius: 20px;
@@ -104,16 +104,13 @@ input:focus {
 }
 
 .img {
-	
-	margin-top:30px;
-	margin-left:20px;
-	
+	padding: 10px;
 }
 </style>
 
 <div class="img">
 	<a href="http://localhost:8080/DS_HTML/TestProject"> <img
-		src="img/p2.jpg" width=150 height=70 ;></a>
+		src="img/p2.jpg" width=10%;></a>
 
 	<form action='${requestUri}' method='get'>
 		<input class="inputbox" type="text" placeholder="Search.." size="70">
@@ -121,26 +118,15 @@ input:focus {
 </div>
 
 <div class="topnav">
-	<a class="active" href="http://localhost:8080/DS_HTML/googleitem.jsp">å…¨éƒ¨</a><a  href="http://localhost:8080/DS_HTML/picture.jsp">åœ–ç‰‡</a> <a>å½±ç‰‡</a> <a>æ–°è</a> <a>åœ°åœ–</a>
-	<a>æ›´å¤š</a>
+	<a href="http://localhost:8080/DS_HTML/googleitem.jsp">¥ş³¡</a><a
+		class="active" href="http://localhost:8080/DS_HTML/picture.jsp">¹Ï¤ù</a>
+	<a>¼v¤ù</a> <a>·s»D</a> <a>¦a¹Ï</a> <a>§ó¦h</a>
 </div>
 <br>
 <br>
 </head>
 <body>
-
-	<div id="content"
-		style="height: 80%; width: 55%; float: left; margin-left: 160px">
-		<%
-		String[][] orderList = (String[][]) request.getAttribute("query");
-		for (int i = 0; i < orderList.length; i++) {
-		%>
-		<a href='<%=orderList[i][1]%>'><%=orderList[i][0]%></a><br>
-		<h style="font-size:10px ;"><%=orderList[i][1]%></h>
-		<br> <br>
-		<%
-		}
-		%>
-	</div>
+	<img src="img/member.jpg" alt="Google" width=70%
+		style="display: block; margin: auto;">
 </body>
 </html>
