@@ -114,13 +114,17 @@ input:focus {
 
 	<form action='${requestUri}' method='get'>
 		<input class="inputbox" type="text" placeholder="Search.." size="70">
+
 	</form>
 </div>
 
 <div class="topnav">
 	<a href="http://localhost:8080/DS_HTML/googleitem.jsp">全部</a><a
 		class="active" href="http://localhost:8080/DS_HTML/picture.jsp">圖片</a>
-	<a>影片</a> <a>新聞</a> <a>地圖</a> <a>更多</a>
+	<a href="http://localhost:8080/DS_HTML/video.jsp">影片</a> <a
+		href="http://localhost:8080/DS_HTML/news.jsp">新聞</a> <a
+		href="http://localhost:8080/DS_HTML/map.jsp">地圖</a> <a
+		href="http://localhost:8080/DS_HTML/more.jsp">更多</a>
 </div>
 <br>
 <br>

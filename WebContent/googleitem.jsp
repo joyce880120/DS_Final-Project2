@@ -104,25 +104,28 @@ input:focus {
 }
 
 .img {
-	
-	margin-top:30px;
-	margin-left:20px;
-	
+	margin-top: 30px;
+	margin-left: 20px;
 }
 </style>
 
 <div class="img">
 	<a href="http://localhost:8080/DS_HTML/TestProject"> <img
-		src="img/p2.jpg" width=150 height=70 ;></a>
+		src="img/p2.jpg" width=150 height=70;></a>
 
 	<form action='${requestUri}' method='get'>
 		<input class="inputbox" type="text" placeholder="Search.." size="70">
+		
 	</form>
 </div>
 
 <div class="topnav">
-	<a class="active" href="http://localhost:8080/DS_HTML/googleitem.jsp">全部</a><a  href="http://localhost:8080/DS_HTML/picture.jsp">圖片</a> <a>影片</a> <a>新聞</a> <a>地圖</a>
-	<a>更多</a>
+	<a class="active" href="http://localhost:8080/DS_HTML/googleitem.jsp">全部</a><a
+		href="http://localhost:8080/DS_HTML/picture.jsp">圖片</a> <a
+		href="http://localhost:8080/DS_HTML/video.jsp">影片</a> <a
+		href="http://localhost:8080/DS_HTML/news.jsp">新聞</a> <a
+		href="http://localhost:8080/DS_HTML/map.jsp">地圖</a> <a
+		href="http://localhost:8080/DS_HTML/more.jsp">更多</a>
 </div>
 <br>
 <br>
@@ -139,7 +142,7 @@ input:focus {
 		<h style="font-size:10px ;"><%=orderList[i][1]%></h>
 		<br> <br>
 		<%
-		}
+			}
 		%>
 	</div>
 </body>

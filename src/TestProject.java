@@ -31,7 +31,7 @@ public class TestProject extends HttpServlet {
 	public WebTree keywordTree;
 	public WebNode keywordNode;
 	public WebPage keywordPage;
-
+	
 	/**
 	 * @see HttpServlet#HttpServlet()
 	 */
@@ -61,6 +61,7 @@ public class TestProject extends HttpServlet {
 			return;
 		}
 		// get google query and put it in hashmap, which can get title and url
+
 		String k = request.getParameter("keyword") + "+小說";// 偷偷在搜尋結果關鍵字上加上"小說"
 		GoogleQuery google = new GoogleQuery(k);
 		WebPage testgq = new WebPage(google.getUrl(), k);
@@ -76,19 +77,14 @@ public class TestProject extends HttpServlet {
 //		keywordTree.buildTree(request.getParameter("keyword"));
 		keywordTree.setPostOrderScore();
 		ArrayList<WebNode> sorts = keywordTree.sortPage();
-
-//		HashMap<String, String> query = new HashMap<String, String>();
 		String[][] s = new String[sorts.size()][2];
+
 		int num = 0;//
 		for (WebNode sort : sorts) {
 			String citeUrl = sort.getWebPage().getUrl();
 			int index = citeUrl.indexOf("?q=");
 			int index2 = citeUrl.lastIndexOf("&sa=");
-			citeUrl = citeUrl.substring(index + 3,index2);// 網址去頭去尾
-//			int index2 = citeUrl.indexOf("&sa=");
-			
-			//citeUrl = citeUrl.substring(0, index2);// 網址
-
+			citeUrl = citeUrl.substring(index + 3, index2);// 網址去頭去尾
 			String title = sort.getWebPage().getName();
 
 			System.out.print(sort.nodeScore);// test
@@ -97,24 +93,9 @@ public class TestProject extends HttpServlet {
 			s[num][0] = title;//
 			s[num][1] = citeUrl;//
 			num++;
-//			query.put(title, citeUrl);
 		}
-
-//		String[][] s = new String[query.size()][2];
-//		int num = 0;
-//		System.out.println("**********************");// test
-//		for (Entry<String, String> entry : query.entrySet()) {
-//			String key = entry.getKey();
-//			String value = entry.getValue();
-//			s[num][0] = key;
-//			s[num][1] = value;
-//			num++;
-//			System.out.println(key+": "+value);//test
-//		}
-		// s attribute is set to get for googleitem jsp
 		request.setAttribute("query", s);
 		request.getRequestDispatcher("googleitem.jsp").forward(request, response);
-
 	}
 
 	/**
